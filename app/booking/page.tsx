@@ -3,7 +3,7 @@
 import "./booking.scss";
 import arrowForward from "@/public/arrow_forward.svg";
 import Image from "next/image";
-import {Planet, Planets} from "@/app/data/planet";
+import {Planet, GetPlanets} from "@/app/data/planet";
 import React, {ReactNode, useEffect, useState} from "react";
 import {useSearchParams} from 'next/navigation'
 
@@ -16,7 +16,7 @@ export default function Page() {
     const planet = searchParams.get('planet');
 
     useEffect(() => {
-        setPlanets(Planets.map((planet: Planet) => {
+        setPlanets(GetPlanets().map((planet: Planet) => {
             return <option key={planet.name} value={planet.name}>{planet.name}</option>;
         }));
     }, []);
@@ -24,7 +24,7 @@ export default function Page() {
     useEffect(() => {
         if (planet) {
             setSelectedPlanet(planet);
-            setFormData(prevData => ({...prevData, toPlanet: Planets.find(e => e.name === planet)!}));
+            setFormData(prevData => ({...prevData, toPlanet: GetPlanets().find(e => e.name === planet)!}));
         }
     }, [planet]);
 
@@ -116,8 +116,8 @@ export class BookingFormData {
     constructor() {
         this.fromDate = new Date();
         this.toDate = new Date();
-        this.fromPlanet = Planets[0];
-        this.toPlanet = Planets[0];
+        this.fromPlanet = GetPlanets()[0];
+        this.toPlanet = GetPlanets()[0];
         this.infants = 0;
         this.children = 0;
         this.adults = 0;

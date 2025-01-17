@@ -31,3 +31,8 @@ a {
 main {
   padding: 1rem;
 }
+
+input[type="date"], select {
+  padding: 4px;
+  font-size: 1.5rem;
+}

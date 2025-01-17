@@ -4,10 +4,21 @@
 
   display: flex;
 
-  div {
-    width: 20vw;
-    padding: 1rem;
-    min-height: 40vh;
-    text-align: center;
+}
+
+div {
+  width: 20vw;
+  padding: 1rem;
+  min-height: 40vh;
+  text-align: center;
+}
+
+.booking-bottom {
+  margin: auto;
+  border: 2px solid white;
+
+  p {
+    height: 1.5rem;
+    font-size: 1.5rem;
   }
 }

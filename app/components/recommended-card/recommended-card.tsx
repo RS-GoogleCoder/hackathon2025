@@ -1,4 +1,6 @@
-﻿import "./recommended-card.scss";
+﻿'use client'
+
+import "./recommended-card.scss";
 import {Planet} from "@/app/data/planet";
 import Globe from "@/public/globe.svg";
 import Image from "next/image";
@@ -11,7 +13,12 @@ export default function RecommendedCard(props: { name: string, planet: Planet, i
             <div className="recommended-card">
                 <div>
                     <p>
-                        <Image src={Globe} alt={props.name}/> {props.planet.name}</p>
+                        <Image src={Globe} alt={props.name}/> {props.planet.name}
+                        <button onClick={() => {
+                            document.location.href = `/booking?planet=${props.planet.name}`
+                        }}>Go
+                        </button>
+                    </p>
                 </div>
                 <div>
                     <h2>{props.name}</h2>

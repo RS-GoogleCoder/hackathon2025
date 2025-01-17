@@ -1,3 +1,5 @@
+'use client'
+
 import "./page.scss";
 import RecommendedCard from "@/app/components/recommended-card/recommended-card";
 import {Planets} from "@/app/data/planet";

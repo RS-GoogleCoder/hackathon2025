@@ -3,18 +3,28 @@
 import "./booking.scss";
 import arrowForward from "@/public/arrow_forward.svg";
 import Image from "next/image";
-import FilterDropdown from "@/app/components/filter-dropdown/filter-dropdown";
 import {Planet, Planets} from "@/app/data/planet";
 import {ReactNode, useEffect, useState} from "react";
+import {useSearchParams} from 'next/navigation'
 
 export default function Page() {
     const [planets, setPlanets] = useState<ReactNode[]>([]);
+    const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
+
+    const searchParams = useSearchParams();
+    const planet = searchParams.get('planet');
 
     useEffect(() => {
         setPlanets(Planets.map((planet: Planet) => {
-            return <option key={planet.name}>{planet.name}</option>;
+            return <option key={planet.name} value={planet.name}>{planet.name}</option>;
         }));
     }, []);
+
+    useEffect(() => {
+        if (planet) {
+            setSelectedPlanet(planet);
+        }
+    }, [planet]);
 
     return (
         <form>
@@ -33,7 +43,9 @@ export default function Page() {
                     <h1>To</h1>
                     <input type="date" name="to" id="to"/>
                     <br/>
-                    <select>{planets}</select>
+                    <select value={selectedPlanet || ""} onChange={(e) => setSelectedPlanet(e.target.value)}>
+                        {planets}
+                    </select>
                 </div>
             </div>
             <div className={"booking-bottom"}>

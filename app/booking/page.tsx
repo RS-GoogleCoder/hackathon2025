@@ -37,8 +37,7 @@ export default function Page() {
                 </div>
             </div>
             <div className={"booking-bottom"}>
-                <div>
-                    <h2>Seat type</h2>
+                <div className="booking-bottom-container">
                     <div>
                         <p>
                             Infants <input type="number" name="infants" id="infants" min={0} max={10}/>
@@ -50,6 +49,7 @@ export default function Page() {
                             Adult <input type="number" name="infants" id="infants" min={0} max={10}/>
                         </p>
                     </div>
+                    <h2>Seat type</h2>
                     <select>
                     <option key={SeatType.Economy}>Economy</option>
                     <option key={SeatType.Business}>Business</option>

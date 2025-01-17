@@ -8,3 +8,8 @@
         this.rating = rating;
     }
 }
+
+export const Carriers = [
+    new Carrier("Star Alliance", 4),
+    new Carrier("Star Ship", 3.5)
+]

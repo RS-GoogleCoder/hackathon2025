@@ -2,15 +2,29 @@
 
 import {useSearchParams} from "next/navigation";
 import {BookingFormData} from "@/app/booking/page";
-
+import {Carriers} from "@/app/data/carrier";
+import {Trip} from "@/app/data/trip";
+import {ShipModels} from "@/app/data/shipModel";
+import {useEffect, useState} from "react";
+import "./trips.scss";
 
 export default function Page() {
+
 
     const searchParams = useSearchParams();
     const searchParamsData = searchParams.get("data");
     let data: BookingFormData;
-    if (searchParamsData)
+
+
+    const [trips, setTrips] = useState<Trip[]>([]);
+
+    if (searchParamsData) {
         data = JSON.parse(searchParamsData);
+
+        useEffect(() => {
+            setTrips(GetRandomTrips(data, 5));
+        }, []);
+    }
     else {
         return (<>
             <h1>No trip data!</h1>
@@ -21,9 +35,24 @@ export default function Page() {
         </>);
     }
 
+
     return (<>
         <h1>Trips</h1>
         <p>{DataToString(data)}</p>
+        <table>
+            <tbody>
+            {trips.map((trip: Trip, index: number) => {
+                return (<tr key={index}>
+                    <td>{trip.carrier.name}</td>
+                    <td>{trip.model.manufacturer} {trip.model.model}</td>
+                    <td>${trip.price} ($CRED)</td>
+                    <td>
+                        <button>Select</button>
+                    </td>
+                </tr>);
+            })}
+            </tbody>
+        </table>
     </>);
 }
 
@@ -41,4 +70,25 @@ function DataToString(bookingFormData: BookingFormData) {
 function DateToString(date: Date) {
     return date.toString();
     //return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+}
+
+function GetRandomTrip(data: BookingFormData): Trip {
+    let random = Math.random();
+    const randomCarrierIndex = Math.floor(random * Carriers.length);
+    const carrier = Carriers[randomCarrierIndex];
+
+    random = Math.random();
+    const randomModelIndex = Math.floor(random * ShipModels.length);
+    const shipModel = ShipModels[randomModelIndex];
+
+
+    return new Trip(data, carrier, shipModel, 500);
+}
+
+function GetRandomTrips(data: BookingFormData, amount: number): Trip[] {
+    const trips = [];
+    for (let i = 0; i < amount; i++) {
+        trips.push(GetRandomTrip(data));
+    }
+    return trips;
 }

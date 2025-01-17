@@ -1,0 +1,21 @@
+﻿@import "@/app/globals";
+
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 5em;
+
+  tr {
+
+    @include Glow();
+    border-radius: 1rem;
+    border-width: 2px;
+    background-color: transparent;
+
+    td {
+
+      padding: 0.5rem;
+    }
+  }
+}

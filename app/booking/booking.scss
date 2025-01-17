@@ -5,6 +5,9 @@
   display: flex;
 
 }
+html{
+  color-scheme: dark !important;
+}
 
 div {
   width: 20vw;
@@ -33,6 +36,8 @@ div {
 .booking-bottom-container{
   height: min-content;
 }
+
+
 
 p input{
   padding: 1em;
@@ -71,6 +76,13 @@ button{
   border: 1px solid var(--accent);
   margin-bottom: 3rem;
   box-shadow: 0px 0px 15px 0px rgba(4,90,196,0.9);
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{
+  -webkit-appearance: none;
+  margin: 3;
+  background-color: black;
 }
 select{
   margin-top: 1em;

@@ -13,4 +13,7 @@ export const Planets = [
     new Planet("Yavin IV"),
     new Planet("Hoth"),
     new Planet("Dagobah"),
+    new Planet("Mustafar"),
+    new Planet("Coruscant"),
+    new Planet("Bespin"),
 ]

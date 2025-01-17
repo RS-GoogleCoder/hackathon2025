@@ -72,15 +72,15 @@ export default function Page() {
                     <div>
                         <p>
                             Infants <input type="number" name="infants" id="infants" min={0} max={10}
-                                           onChange={handleInputChange}/>
+                                           defaultValue={0} onChange={handleInputChange}/>
                         </p>
                         <p>
                             Child <input type="number" name="children" id="children" min={0} max={10}
-                                         onChange={handleInputChange}/>
+                                         defaultValue={0} onChange={handleInputChange}/>
                         </p>
                         <p>
                             Adult <input type="number" name="adults" id="adults" min={0} max={10}
-                                         onChange={handleInputChange}/>
+                                         defaultValue={1} onChange={handleInputChange}/>
                         </p>
                     </div>
                     <select name="seatType" onChange={handleInputChange}>

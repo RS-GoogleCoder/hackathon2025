@@ -36,7 +36,7 @@ export default function Page() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log(formData);
-        document.location.href = `/checkout?` + JSON.stringify(formData);
+        document.location.href = `/trips?data=` + JSON.stringify(formData);
     };
 
     return (

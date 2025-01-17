@@ -1,13 +1,14 @@
 ﻿'use client'
 
 import {useSearchParams} from "next/navigation";
+import {BookingFormData} from "@/app/booking/page";
 
 
 export default function Page() {
 
     const searchParams = useSearchParams();
     const searchParamsData = searchParams.get("data");
-    let data;
+    let data: BookingFormData;
     if (searchParamsData)
         data = JSON.parse(searchParamsData);
     else {
@@ -22,6 +23,22 @@ export default function Page() {
 
     return (<>
         <h1>Trips</h1>
-        <p>{data?.toString()}</p>
+        <p>{DataToString(data)}</p>
     </>);
+}
+
+function DataToString(bookingFormData: BookingFormData) {
+    const outboundDate = DateToString(bookingFormData.fromDate);
+    const returnDate = DateToString(bookingFormData.toDate);
+    const infants = bookingFormData.infants > 0 ? (bookingFormData.infants + " infants + ") : "";
+    const children = bookingFormData.children > 0 ? bookingFormData.children + " children + " : "";
+
+
+    return outboundDate + " - " + returnDate + ", \t " + bookingFormData.fromPlanet.name + " to " + bookingFormData.toPlanet.name + ", \t " +
+        infants + children + bookingFormData.adults + " adults (" + bookingFormData.seatType.toString() + ")";
+}
+
+function DateToString(date: Date) {
+    return date.toString();
+    //return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
 }

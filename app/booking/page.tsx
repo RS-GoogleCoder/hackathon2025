@@ -10,7 +10,7 @@ import {useSearchParams} from 'next/navigation'
 export default function Page() {
     const [planets, setPlanets] = useState<ReactNode[]>([]);
     const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
-    const [formData, setFormData] = useState(new BookingFormData());
+    const [formData, setFormData] = useState<BookingFormData>(new BookingFormData());
 
     const searchParams = useSearchParams();
     const planet = searchParams.get('planet');
@@ -103,7 +103,7 @@ export enum SeatType {
     First
 }
 
-class BookingFormData {
+export class BookingFormData {
     fromDate: Date;
     toDate: Date;
     fromPlanet: Planet;

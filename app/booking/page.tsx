@@ -37,23 +37,28 @@ export default function Page() {
                 </div>
             </div>
             <div className={"booking-bottom"}>
-                <p>
-                    Infants <input type="number" name="infants" id="infants" min={0} max={10}/>
-                </p>
-                <p>
-                    Child <input type="number" name="infants" id="infants" min={0} max={10}/>
-                </p>
-                <p>
-                    Adult <input type="number" name="infants" id="infants" min={0} max={10}/>
-                </p>
-                <p>Seat type</p>
-                <select>
+                <div>
+                    <h2>Seat type</h2>
+                    <div>
+                        <p>
+                            Infants <input type="number" name="infants" id="infants" min={0} max={10}/>
+                        </p>
+                        <p>
+                            Child <input type="number" name="infants" id="infants" min={0} max={10}/>
+                        </p>
+                        <p>
+                            Adult <input type="number" name="infants" id="infants" min={0} max={10}/>
+                        </p>
+                    </div>
+                    <select>
                     <option key={SeatType.Economy}>Economy</option>
                     <option key={SeatType.Business}>Business</option>
                     <option key={SeatType.First}>First</option>
                 </select>
+                </div>
+                <button>Go 🚀</button>
             </div>
-            <button>Go 🚀</button>
+            
         </form>
     );
 }

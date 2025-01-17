@@ -14,14 +14,46 @@ div {
 }
 
 .booking-bottom {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
   margin: auto;
-  border: 2px solid white;
-
+  border-top: 1px solid var(--accent);
+  width: 80%;
   p {
+    padding: 1em;
     height: 1.5rem;
     font-size: 1.5rem;
   }
+  h2{
+    font-size: 2.5em;
+    padding: 1.5em;
+  }
+
 }
+
+p input{
+  padding: 1em;
+  background-color: black;
+  color: white;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  box-shadow: 0px 0px 15px 0px rgba(4,90,196,0.9);
+}
+
+button{
+  background-color: black;
+  color: white;
+  height: min-content;
+  font-size: 4em;
+  margin-top: 1em;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  margin-bottom: 3rem;
+  box-shadow: 0px 0px 75px 0px rgba(4,90,196,0.9);
+}
+
 .heading{
   text-align: center;
   font-size: 4em;
@@ -32,9 +64,17 @@ div {
   background-color: black;
   color: white;
   margin-top: 1em;
-  height: 4.5rem;
-  width: 12rem;
-  padding: 4px;
+  padding: 1em;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  margin-bottom: 3rem;
+  box-shadow: 0px 0px 15px 0px rgba(4,90,196,0.9);
+}
+select{
+  background-color: black;
+  color: white;
+  margin-top: 1em;
+  padding: 0.75rem;
   border-radius: 8px;
   border: 1px solid var(--accent);
   margin-bottom: 3rem;

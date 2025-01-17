@@ -18,7 +18,7 @@ export default function Page() {
 
     return (
         <form>
-            <h1>Booking</h1>
+            <h1 className="heading">Booking</h1>
             <div className={"booking-main"}>
                 <div className={"booking-left"}>
                     <h1>From</h1>

@@ -89,7 +89,9 @@ export default function Page() {
                         <option value="First">First</option>
                     </select>
                 </div>
-                <button type="submit">Go 🚀</button>
+                <button type="submit"
+                        onClick={() => document.querySelector('.rocket')?.classList.add('move-rocket')}>Go <span
+                    className="rocket">🚀</span></button>
             </div>
         </form>
     );

@@ -1,11 +1,11 @@
-﻿div.recommended-card {
-  border: 1px solid var(--accent);
-  height: 100%;
-  width: 30rem;
-  border-radius: 12px;
-  box-shadow: 0px 0px 25px 0px rgba(4, 90, 196, 0.9);
+﻿@import "@/app/globals";
+
+div.recommended-card {
+
+  @include Glow();
   min-height: 30vh;
   padding: 1rem;
+  width: 30rem;
 
   div {
     img.icon {

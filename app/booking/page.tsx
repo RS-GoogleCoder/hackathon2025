@@ -68,7 +68,7 @@ export default function Page() {
             </div>
             <div className={"booking-bottom"}>
                 <div>
-                    <h2>Seat type</h2>
+                    <h2>Seats</h2>
                     <div>
                         <p>
                             Infants <input type="number" name="infants" id="infants" min={0} max={10}
@@ -83,13 +83,13 @@ export default function Page() {
                                          defaultValue={1} onChange={handleInputChange}/>
                         </p>
                     </div>
-                    <select name="seatType" onChange={handleInputChange}>
+                    <select name="seatType" onChange={handleInputChange} style={{marginTop: "1rem"}}>
                         <option value="Economy">Economy</option>
                         <option value="Business">Business</option>
                         <option value="First">First</option>
                     </select>
                 </div>
-                <button type="submit"
+                <button type="submit" style={{fontSize: "2rem"}}
                         onClick={() => document.querySelector('.rocket')?.classList.add('move-rocket')}>Go <span
                     className="rocket">🚀</span></button>
             </div>

@@ -4,9 +4,8 @@
 .booking-main {
   width: 60vw;
   margin: auto;
-
   display: flex;
-
+  flex-shrink: 0;
 }
 
 body{
@@ -22,6 +21,13 @@ div {
   width: 20vw;
   padding: 1rem;
   text-align: center;
+  height: min-content;
+
+  img {
+    overflow: clip;
+    height: 6vw;
+    width: 6vw;
+  }
 }
 
 .booking-bottom {
@@ -52,7 +58,6 @@ div {
 .heading {
   text-align: center;
   font-size: 4em;
-  margin-bottom: 5rem;
 }
 
 .booking-main input {

@@ -52,7 +52,7 @@ export default function Page() {
                     </select>
                 </div>
                 <div className={"booking-middle"}>
-                    <Image src={arrowForward} alt={"Forward arrow"} style={{width: "100%", height: "30%"}}/>
+                    <Image src={arrowForward} alt={"Forward arrow"}/>
                 </div>
                 <div className={"booking-right"}>
                     <h1>To</h1>
@@ -69,20 +69,25 @@ export default function Page() {
             <div className={"booking-bottom"}>
                 <div>
                     <h2>Seats</h2>
-                    <div>
-                        <p>
-                            Infants <input type="number" name="infants" id="infants" min={0} max={10}
-                                           defaultValue={0} onChange={handleInputChange}/>
-                        </p>
-                        <p>
-                            Child <input type="number" name="children" id="children" min={0} max={10}
-                                         defaultValue={0} onChange={handleInputChange}/>
-                        </p>
-                        <p>
-                            Adult <input type="number" name="adults" id="adults" min={0} max={10}
-                                         defaultValue={1} onChange={handleInputChange}/>
-                        </p>
-                    </div>
+                    <table width={"100%"}>
+                        <tbody>
+                        <tr>
+                            <td>Infants</td>
+                            <td><input type="number" name="infants" id="infants" min={0} max={10} defaultValue={0}
+                                       onChange={handleInputChange}/></td>
+                        </tr>
+                        <tr>
+                            <td>Child</td>
+                            <td><input type="number" name="children" id="children" min={0} max={10} defaultValue={0}
+                                       onChange={handleInputChange}/></td>
+                        </tr>
+                        <tr>
+                            <td>Adult</td>
+                            <td><input type="number" name="adults" id="adults" min={0} max={10} defaultValue={1}
+                                       onChange={handleInputChange}/></td>
+                        </tr>
+                        </tbody>
+                    </table>
                     <select name="seatType" onChange={handleInputChange} style={{marginTop: "1rem"}}>
                         <option value="Economy">Economy</option>
                         <option value="Business">Business</option>

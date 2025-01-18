@@ -5,6 +5,7 @@ import {Trip,} from "../data/trip";
 import {ReactNode} from "react";
 import {Planet} from "@/app/data/planet";
 import {GetDistance} from "@/app/booking/page";
+import {SendMail} from "@/app/payment-email";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -30,6 +31,7 @@ export default function Page() {
         const nameOnCard = form.nameOnCard.value.trim();
         const expiryDate = form.expiryDate.value.trim();
         const securityCode = form.securityCode.value.trim();
+        const email = form.email.value.trim();
 
         if (!billingAddress || !cardNumber || !nameOnCard || !expiryDate || !securityCode) {
             alert("Please fill in all payment fields.");
@@ -54,6 +56,8 @@ export default function Page() {
             return;
         }
         document.location.href = "/finished-payment?planet=" + (tripInfo.data.toPlanet as Planet).name;
+        SendMail(email, nameOnCard, billingAddress, tripInfo);
+
     }
 
     return (
@@ -89,6 +93,11 @@ export default function Page() {
                 <label>
                     Security Code:
                     <input type="text" name="securityCode" placeholder="123"/>
+                </label>
+                <br/>
+                <label>
+                    Billing Email:
+                    <input type="email" name="email" placeholder="john.doe@microsoft.com"/>
                 </label>
                 <br/>
                 <button>Complete payment</button>

@@ -9,9 +9,10 @@
 
 }
 
-body{
+*{
   font-family: 'Poppins';
-  background-color: #0d1117;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
 }
 
 html {
@@ -29,7 +30,6 @@ div {
   justify-content: space-evenly;
   align-items: center;
   margin: auto;
-  border-top: 1px solid var(--accent);
   width: 80%;
 
   p {
@@ -45,6 +45,7 @@ div {
 
 }
 
+
 .booking-bottom-container {
   height: min-content;
 }
@@ -58,13 +59,12 @@ div {
 .booking-main input {
   margin-top: 1em;
   padding: 1em;
-  @include Glow();
 }
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
-  background-color: black;
+  background-color: #1e1e2e;
 }
 
 @keyframes moveToTopRight {

@@ -52,8 +52,7 @@ export default function Page() {
             formData.fromPlanet = GetPlanets().find(e => e.name === formData.fromPlanet!)!;
         }
         document.querySelector('.rocket')?.classList.add('move-rocket');
-        console.dir(formData);
-        //document.location.href = `/trips?data=` + JSON.stringify(formData);
+        document.location.href = `/trips?data=` + JSON.stringify(formData);
     };
 
     return (
@@ -62,19 +61,25 @@ export default function Page() {
             <div className={"booking-main"}>
                 <div className={"booking-left"}>
                     <h1>From</h1>
-                    <input type="date" name="fromDate" id="from" onChange={handleInputChange}/>
-                    <br/>
+
                     <select name="fromPlanet" onChange={handleInputChange}>
                         {planets}
                     </select>
                 </div>
                 <div className={"booking-middle"}>
                     <Image src={arrowForward} alt={"Forward arrow"}/>
+                    <h3>Depart</h3>
+                    <input type="date" name="fromDate" id="from" onChange={handleInputChange}
+                           defaultValue={formData.fromDate.toISOString().split('T')[0]}/>
+                    <h3>Return</h3>
+
+                    <input type="date" name="toDate" id="to" onChange={handleInputChange}
+                           defaultValue={new Date(formData.toDate.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}/>
+                    <br/>
+                    <br/>
                 </div>
                 <div className={"booking-right"}>
                     <h1>To</h1>
-                    <input type="date" name="toDate" id="to" onChange={handleInputChange}/>
-                    <br/>
                     <select name="toPlanet" value={formData.toPlanet as string} onChange={(e) => {
                         handleInputChange(e);
                     }}>
@@ -136,6 +141,7 @@ export class BookingFormData {
     constructor() {
         this.fromDate = new Date();
         this.toDate = new Date();
+        this.toDate.setDate(this.fromDate.getDate() + 7);
         this.fromPlanet = GetPlanets()[0];
         this.toPlanet = undefined;
         this.infants = 0;

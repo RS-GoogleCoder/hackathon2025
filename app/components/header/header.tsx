@@ -22,7 +22,7 @@ export default function Header() {
                 <a href={"/"} className={currentPath === "/" ? "active" : ""}>Home</a>
                 <a href={"/booking"} className={currentPath === "/booking" ? "active" : ""}>Booking</a>
                 <a href={"/map"} className={currentPath === "/map" ? "active" : ""}>Galaxy Map</a>
-
+                <a href={"/attractions"} className={currentPath === "/attractions" ? "active" : ""}>Attractions</a>
             </nav>
         </header>
     );

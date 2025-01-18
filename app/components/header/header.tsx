@@ -9,6 +9,7 @@ export default function Header() {
             <nav className={"nav-links"}>
                 <a href={"/"}>Home</a>
                 <a href={"/booking"}>Booking</a>
+                <a href={"/map"}>Galaxy Map</a>
             </nav>
         </header>
     );

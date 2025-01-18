@@ -1,13 +1,16 @@
-﻿export class Planet {
+﻿import seedrandom from 'seedrandom';
+
+export class Planet {
     name: string = "Some planet";
     coordX: number = 0;
     coordY: number = 0;
-
 
     constructor(name: string) {
         this.name = name;
     }
 }
+
+const rng = seedrandom('your-seed-here');
 
 const Planets = [
     new Planet("Earth"),
@@ -19,13 +22,13 @@ const Planets = [
     new Planet("Mustafar"),
     new Planet("Coruscant"),
     new Planet("Bespin"),
-]
+];
 
 export function GetPlanets(): Planet[] {
     const modifiedPlanets = Planets;
     modifiedPlanets.forEach(p => {
-        p.coordX = (Math.random() - 0.5) * 1000;
-        p.coordY = (Math.random() - 0.5) * 1000;
+        p.coordX = (rng() - 0.5) * 1000;
+        p.coordY = (rng() - 0.5) * 1000;
     });
     return modifiedPlanets;
 }

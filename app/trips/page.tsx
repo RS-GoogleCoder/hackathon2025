@@ -67,7 +67,10 @@ export default function Page() {
                 {sortedTrips.map((trip: Trip, index: number) => {
                     return (
                         <tr key={index}>
-                            <td>{trip.carrier.name} ({trip.carrier.rating % 1 === 0 ? trip.carrier.rating + ".0" : trip.carrier.rating}⭐)</td>
+                            <td style={{display: "flex", alignItems: "center"}}><Image
+                                src={"/carriers/" + trip.carrier.image} alt={trip.carrier.name} width={48}
+                                height={48}/>{trip.carrier.name} ({trip.carrier.rating % 1 === 0 ? trip.carrier.rating + ".0" : trip.carrier.rating}⭐)
+                            </td>
                             <td>{trip.model.manufacturer} {trip.model.model}</td>
                             <td>Ȼ{trip.price.toLocaleString()} (CRED)</td>
                             <td style={{display: "flex", flexDirection: "row-reverse"}}>

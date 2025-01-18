@@ -1,4 +1,4 @@
-﻿@import "@/app/globals";
+﻿@use "@/app/globals";
 
 
 table {
@@ -8,7 +8,7 @@ table {
 
   tr {
 
-    @include Glow();
+    @include globals.Glow();
     border-radius: 1rem;
     border-width: 2px;
     background-color: transparent;

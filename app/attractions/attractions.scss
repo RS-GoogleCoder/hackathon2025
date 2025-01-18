@@ -1,0 +1,29 @@
+﻿@use "@/app/globals";
+
+.attractions-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+div.attraction {
+
+  @include globals.Glow();
+  border-radius: 1rem;
+  border-width: 2px;
+  background-color: transparent;
+  padding: 1rem;
+  width: 25vw;
+  margin: 2rem auto;
+  text-align: center;
+
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  img {
+    border-radius: 1rem;
+    margin: auto;
+  }
+}

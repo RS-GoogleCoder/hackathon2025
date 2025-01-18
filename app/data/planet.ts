@@ -16,12 +16,12 @@ const Planets = [
     new Planet("Earth"),
     new Planet("Tatooine"),
     new Planet("Alderaan"),
-    new Planet("Yavin IV"),
     new Planet("Hoth"),
     new Planet("Dagobah"),
     new Planet("Mustafar"),
     new Planet("Coruscant"),
     new Planet("Bespin"),
+    new Planet("Naboo"),
 ];
 
 export function GetPlanets(): Planet[] {

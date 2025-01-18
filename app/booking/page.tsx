@@ -10,6 +10,7 @@ import {useSearchParams} from 'next/navigation'
 export default function Page() {
     const [planets, setPlanets] = useState<ReactNode[]>([]);
     const [formData, setFormData] = useState<BookingFormData>(new BookingFormData());
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const searchParams = useSearchParams();
     const planet = searchParams.get('planet');
@@ -41,14 +42,30 @@ export default function Page() {
         }
     };
 
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+        if (formData.fromPlanet === formData.toPlanet) {
+            newErrors.toPlanet = "From and To planets cannot be the same";
+        }
+        if (!formData.toPlanet || formData.toPlanet === "Select...") {
+            newErrors.toPlanet = "Please select a destination planet";
+        }
+        if (formData.fromDate >= formData.toDate) {
+            newErrors.toDate = "Return date must be after departure date";
+        }
+        if (formData.infants == 0 && formData.children == 0 && formData.adults == 0) {
+            newErrors.seats = "Select at least one seat";
+        }
+        if (formData.adults == 0 && (formData.children > 0 || formData.infants > 0)) {
+            newErrors.adults = "At least one adult is required";
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (formData.fromPlanet === formData.toPlanet) {
-            alert("From and To planets cannot be the same");
-            return;
-        }
-        if (formData.toPlanet === "" || formData.toPlanet === "Select..." || formData.toPlanet === undefined) {
-            alert("Please select a destination planet");
+        if (!validateForm()) {
             return;
         }
         if (typeof (formData.toPlanet) == typeof ("")) {
@@ -67,7 +84,6 @@ export default function Page() {
             <div className={"booking-main"}>
                 <div className={"booking-left"}>
                     <h1>From</h1>
-
                     <select name="fromPlanet" onChange={handleInputChange}>
                         {planets}
                     </select>
@@ -78,9 +94,11 @@ export default function Page() {
                     <input type="date" name="fromDate" id="from" onChange={handleInputChange}
                            defaultValue={formData.fromDate.toISOString().split('T')[0]}/>
                     <h3>Return</h3>
-
                     <input type="date" name="toDate" id="to" onChange={handleInputChange}
                            defaultValue={new Date(formData.toDate.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}/>
+                    {errors.toDate && <p className="error">{errors.toDate}</p>}
+                    {errors.seats && <p className="error">{errors.seats}</p>}
+                    {errors.adults && <p className="error">{errors.adults}</p>}
                     <br/>
                     <br/>
                 </div>
@@ -92,6 +110,7 @@ export default function Page() {
                         <option>Select...</option>
                         {planets}
                     </select>
+                    {errors.toPlanet && <p className="error">{errors.toPlanet}</p>}
                 </div>
             </div>
             <div className={"booking-bottom"}>

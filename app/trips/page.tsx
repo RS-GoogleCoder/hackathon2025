@@ -20,6 +20,7 @@ export default function Page() {
 
     if (searchParamsData) {
         data = JSON.parse(searchParamsData);
+        console.dir(data);
 
         useEffect(() => {
             setTrips(GetRandomTrips(data, 5));

@@ -22,7 +22,11 @@ export default function Page() {
 
     useEffect(() => {
         if (planet) {
-            setFormData(prevData => ({...prevData, toPlanet: GetPlanets().find(e => e.name === planet)?.name}));
+            const newPlanet = GetPlanets().find(e => e.name === planet)!.name;
+            const currentFormData = formData;
+            currentFormData.toPlanet = newPlanet;
+            setFormData(currentFormData);
+            console.dir(formData.toPlanet)
         }
     }, [planet]);
 
@@ -48,7 +52,8 @@ export default function Page() {
             formData.fromPlanet = GetPlanets().find(e => e.name === formData.fromPlanet!)!;
         }
         document.querySelector('.rocket')?.classList.add('move-rocket');
-        document.location.href = `/trips?data=` + JSON.stringify(formData);
+        console.dir(formData);
+        //document.location.href = `/trips?data=` + JSON.stringify(formData);
     };
 
     return (
@@ -70,7 +75,7 @@ export default function Page() {
                     <h1>To</h1>
                     <input type="date" name="toDate" id="to" onChange={handleInputChange}/>
                     <br/>
-                    <select name="toPlanet" onChange={(e) => {
+                    <select name="toPlanet" value={formData.toPlanet as string} onChange={(e) => {
                         handleInputChange(e);
                     }}>
                         <option>Select...</option>
@@ -135,7 +140,7 @@ export class BookingFormData {
         this.toPlanet = undefined;
         this.infants = 0;
         this.children = 0;
-        this.adults = 0;
+        this.adults = 1;
         this.seatType = SeatType.Economy;
     }
 }

@@ -7,6 +7,7 @@ import {Trip} from "@/app/data/trip";
 import {ShipModels} from "@/app/data/shipModel";
 import {useEffect, useState} from "react";
 import "./trips.scss";
+import {Planet} from "@/app/data/planet";
 
 export default function Page() {
 
@@ -22,6 +23,7 @@ export default function Page() {
         data = JSON.parse(searchParamsData);
         console.dir(data);
 
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
             setTrips(GetRandomTrips(data, 5));
         }, []);
@@ -64,7 +66,7 @@ function DataToString(bookingFormData: BookingFormData) {
     const children = bookingFormData.children > 0 ? bookingFormData.children + " children + " : "";
 
 
-    return outboundDate + " - " + returnDate + ", \t " + bookingFormData.fromPlanet.name + " to " + bookingFormData.toPlanet.name + ", \t " +
+    return outboundDate + " - " + returnDate + ", \t " + (bookingFormData.fromPlanet as Planet).name + " to " + (bookingFormData.toPlanet as Planet).name + ", \t " +
         infants + children + bookingFormData.adults + " adults (" + bookingFormData.seatType.toString() + ")";
 }
 

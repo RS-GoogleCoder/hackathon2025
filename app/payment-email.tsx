@@ -1,11 +1,24 @@
 ﻿'use server'
 
 import {Trip} from "@/app/data/trip";
-import {GetDistance} from "@/app/booking/page";
 import {Planet} from "@/app/data/planet";
 import nodemailer from "nodemailer";
 
 async function GetPaymentEmail(name: string, address: string, tripInfo: Trip): Promise<string> {
+    const totalSeats = tripInfo.data.infants + tripInfo.data.children + tripInfo.data.adults;
+    const seats: string[] = [];
+    const rowNumber = Math.round(Math.random() * 100);
+
+    for (let i = 0; i < totalSeats; i++) {
+        let seat: string;
+        do {
+            const seatLetter = String.fromCharCode(65 + (seats.length % 24));
+            seat = `${rowNumber + Math.floor(seats.length / 24)}${seatLetter}`;
+        } while (seats.includes(seat));
+        seat += " (" + Math.random().toString(36).substring(2, 14).toUpperCase() + ")";
+        seats.push(seat);
+    }
+    seats.sort();
     return `
 <div>
 <style>
@@ -44,6 +57,11 @@ async function GetPaymentEmail(name: string, address: string, tripInfo: Trip): P
         <p><strong>To:</strong> ${(tripInfo.data.toPlanet as Planet).name}</p>
         <p><strong>Departure Date:</strong> ${new Date(tripInfo.data.fromDate).toDateString()}</p>
         <p><strong>Return Date:</strong> ${new Date(tripInfo.data.toDate).toDateString()}</p>
+        <br/>
+        <p><strong>Your seats:</strong></p>
+        <ul>
+            ${seats.map(seat => `<li>${seat}</li>`).join('')}
+        </ul>
     </div>
     <div class="email-footer">
         <p>Best regards,</p>
@@ -65,14 +83,13 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function SendMail(email: string, name: string, address: string, tripInfo: Trip) {
+    const emailBody = await GetPaymentEmail(name, address, tripInfo);
     const mailOptions = {
-        from: 'tripjawaofficial@gmail.com',
+        from: 'TripJawa',
         to: email,
-        subject: 'TripJawa receipt',
-        html: await GetPaymentEmail(name, address, tripInfo)
+        subject: 'TripJawa Receipt',
+        html: emailBody
     }
-
-
     transporter.sendMail(mailOptions, function (error: any, info: { response: string; }) {
         if (error) {
             console.log(error);

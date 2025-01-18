@@ -61,7 +61,7 @@ export default function Page() {
     }
 
     return (
-        <div>
+        <div style={{padding: "2rem"}}>
             <h1>Checkout</h1>
             {TripInfoToHTML(tripInfo)}
             <br/><br/>

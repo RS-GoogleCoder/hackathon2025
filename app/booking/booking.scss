@@ -1,4 +1,5 @@
-﻿@import "@/app/globals";
+﻿@use "@/app/globals";
+
 .booking-main {
   width: 60vw;
   margin: auto;
@@ -58,7 +59,7 @@ html {
 .booking-main input {
   margin-top: 1em;
   padding: 1em;
-  @include Glow();
+  @include globals.Glow();
 }
 
 input[type=number]::-webkit-inner-spin-button,

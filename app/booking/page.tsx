@@ -9,7 +9,6 @@ import {useSearchParams} from 'next/navigation'
 
 export default function Page() {
     const [planets, setPlanets] = useState<ReactNode[]>([]);
-    const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
     const [formData, setFormData] = useState<BookingFormData>(new BookingFormData());
 
     const searchParams = useSearchParams();
@@ -23,8 +22,7 @@ export default function Page() {
 
     useEffect(() => {
         if (planet) {
-            setSelectedPlanet(planet);
-            setFormData(prevData => ({...prevData, toPlanet: GetPlanets().find(e => e.name === planet)!}));
+            setFormData(prevData => ({...prevData, toPlanet: GetPlanets().find(e => e.name === planet)?.name}));
         }
     }, [planet]);
 
@@ -35,7 +33,21 @@ export default function Page() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(formData);
+        if (formData.fromPlanet === formData.toPlanet) {
+            alert("From and To planets cannot be the same");
+            return;
+        }
+        if (formData.toPlanet === "" || formData.toPlanet === "Select..." || formData.toPlanet === undefined) {
+            alert("Please select a destination planet");
+            return;
+        }
+        if (typeof (formData.toPlanet) == typeof ("")) {
+            formData.toPlanet = GetPlanets().find(e => e.name === formData.toPlanet!)!;
+        }
+        if (typeof (formData.fromPlanet) == typeof ("")) {
+            formData.fromPlanet = GetPlanets().find(e => e.name === formData.fromPlanet!)!;
+        }
+        document.querySelector('.rocket')?.classList.add('move-rocket');
         document.location.href = `/trips?data=` + JSON.stringify(formData);
     };
 
@@ -58,10 +70,10 @@ export default function Page() {
                     <h1>To</h1>
                     <input type="date" name="toDate" id="to" onChange={handleInputChange}/>
                     <br/>
-                    <select name="toPlanet" value={selectedPlanet || ""} onChange={(e) => {
-                        setSelectedPlanet(e.target.value);
+                    <select name="toPlanet" onChange={(e) => {
                         handleInputChange(e);
                     }}>
+                        <option>Select...</option>
                         {planets}
                     </select>
                 </div>
@@ -94,9 +106,7 @@ export default function Page() {
                         <option value="First">First</option>
                     </select>
                 </div>
-                <button type="submit" style={{fontSize: "2rem"}}
-                        onClick={() => document.querySelector('.rocket')?.classList.add('move-rocket')}>Go <span
-                    className="rocket">🚀</span></button>
+                <button type="submit" style={{fontSize: "2rem"}}>Go <span className="rocket">🚀</span></button>
             </div>
         </form>
     );
@@ -111,8 +121,8 @@ export enum SeatType {
 export class BookingFormData {
     fromDate: Date;
     toDate: Date;
-    fromPlanet: Planet;
-    toPlanet: Planet;
+    fromPlanet: string | Planet;
+    toPlanet: string | Planet | undefined;
     infants: number;
     children: number;
     adults: number;
@@ -122,7 +132,7 @@ export class BookingFormData {
         this.fromDate = new Date();
         this.toDate = new Date();
         this.fromPlanet = GetPlanets()[0];
-        this.toPlanet = GetPlanets()[0];
+        this.toPlanet = undefined;
         this.infants = 0;
         this.children = 0;
         this.adults = 0;

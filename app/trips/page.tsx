@@ -48,7 +48,7 @@ export default function Page() {
                 return (<tr key={index}>
                     <td>{trip.carrier.name}</td>
                     <td>{trip.model.manufacturer} {trip.model.model}</td>
-                    <td>${trip.price} ($CRED)</td>
+                    <td>Ȼ{trip.price.toLocaleString()} (CRED)</td>
                     <td>
                         <button>Select</button>
                     </td>
@@ -85,7 +85,7 @@ function GetRandomTrip(data: BookingFormData): Trip {
     const shipModel = ShipModels[randomModelIndex];
 
 
-    return new Trip(data, carrier, shipModel, 500);
+    return new Trip(data, carrier, shipModel);
 }
 
 function GetRandomTrips(data: BookingFormData, amount: number): Trip[] {

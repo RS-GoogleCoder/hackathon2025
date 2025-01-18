@@ -1,7 +1,7 @@
 ﻿'use client'
 
 import {useSearchParams} from "next/navigation";
-import {BookingFormData, GetDistance} from "@/app/booking/page";
+import {BookingFormData, GetDistance, SeatType} from "@/app/booking/page";
 import {Carriers} from "@/app/data/carrier";
 import {Trip} from "@/app/data/trip";
 import {ShipModels} from "@/app/data/shipModel";
@@ -25,7 +25,7 @@ export default function Page() {
 
         // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
-            setTrips(GetRandomTrips(data, 5));
+            setTrips(GetRandomTrips(data, 20));
         }, []);
     }
     else {
@@ -72,12 +72,24 @@ export function DataToString(bookingFormData: BookingFormData) {
 
 
     return outboundDate + " - " + returnDate + ", \t " + (bookingFormData.fromPlanet as Planet).name + " to " + (bookingFormData.toPlanet as Planet).name + ", \t " +
-        infants + children + bookingFormData.adults + " adults (" + bookingFormData.seatType.toString() + ")";
+        infants + children + bookingFormData.adults + " adults (" + SeatTypeToString(bookingFormData.seatType as SeatType) + ")";
 }
 
 function DateToString(date: Date) {
-    return date.toString();
+    date = new Date(date);
+    return date.toDateString();
     //return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+}
+
+function SeatTypeToString(seatType: SeatType) {
+    switch (seatType) {
+        case SeatType.Economy:
+            return "Economy";
+        case SeatType.Business:
+            return "Business";
+        case SeatType.First:
+            return "First";
+    }
 }
 
 function GetRandomTrip(data: BookingFormData): Trip {

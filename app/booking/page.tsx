@@ -15,7 +15,9 @@ export default function Page() {
     const planet = searchParams.get('planet');
 
     useEffect(() => {
-        setPlanets(GetPlanets().map((planet: Planet) => {
+        const planets = GetPlanets();
+        const planetsSort = planets.sort((a, b) => a.name.localeCompare(b.name));
+        setPlanets(planetsSort.map((planet: Planet) => {
             return <option key={planet.name} value={planet.name}>{planet.name}</option>;
         }));
     }, []);

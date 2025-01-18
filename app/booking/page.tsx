@@ -34,7 +34,11 @@ export default function Page() {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name, value} = e.target;
-        setFormData(prevData => ({...prevData, [name]: value}));
+        if (name === "fromDate" || name === "toDate") {
+            setFormData(prevData => ({...prevData, [name]: new Date(value)}));
+        } else {
+            setFormData(prevData => ({...prevData, [name]: value}));
+        }
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -144,6 +148,10 @@ export class BookingFormData {
         this.fromDate = new Date();
         this.toDate = new Date();
         this.toDate.setDate(this.fromDate.getDate() + 7);
+
+        this.fromDate = new Date(this.fromDate);
+        this.toDate = new Date(this.toDate);
+
         this.fromPlanet = GetPlanets()[0];
         this.toPlanet = undefined;
         this.infants = 0;
@@ -151,4 +159,13 @@ export class BookingFormData {
         this.adults = 1;
         this.seatType = SeatType.Economy;
     }
+}
+
+
+export function GetDistance(data: BookingFormData): number {
+    const fromPlanet = data.fromPlanet as Planet;
+    const toPlanet = data.toPlanet as Planet;
+    return Math.sqrt(
+        Math.pow(fromPlanet.coordX - toPlanet.coordX, 2) + Math.pow(fromPlanet.coordY - toPlanet.coordY, 2)
+    );
 }

@@ -10,7 +10,7 @@ export class Planet {
     }
 }
 
-const rng = seedrandom('your-seed-here');
+const rng = seedrandom(1);
 
 const Planets = [
     new Planet("Earth"),

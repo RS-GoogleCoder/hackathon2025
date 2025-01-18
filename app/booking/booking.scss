@@ -4,37 +4,33 @@
   margin: auto;
   display: flex;
   flex-shrink: 0;
-}
 
-body{
-  background-color: #0d1117;
+  div {
+    width: 20vw;
+    padding: 1rem;
+    text-align: center;
+    height: min-content;
+
+    img {
+      overflow: clip;
+      height: 6vw;
+      width: 6vw;
+    }
+  }
 }
 
 html {
   color-scheme: dark !important;
 }
 
-div {
-  width: 20vw;
-  padding: 1rem;
-  text-align: center;
-  height: min-content;
-
-  img {
-    overflow: clip;
-    height: 6vw;
-    width: 6vw;
-  }
-}
 
 .booking-bottom {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin: auto;
   border-top: 1px solid var(--accent);
   width: 80%;
-  margin-top: -2rem;
+  margin: -2rem auto auto;
   padding-top: 0rem;
 
   p {

@@ -1,4 +1,4 @@
-﻿import {BookingFormData, SeatType} from "@/app/booking/page";
+﻿import {BookingFormData, GetDistance, SeatType} from "@/app/booking/page";
 import {Carrier} from "@/app/data/carrier";
 import {ShipModel} from "@/app/data/shipModel";
 import {Planet} from "@/app/data/planet";
@@ -15,13 +15,10 @@ export class Trip {
         this.carrier = carrier;
         this.model = model;
 
-        const distBetweenPlanets = Math.sqrt(
-            ((data.fromPlanet as Planet).coordX + (data.toPlanet as Planet).coordX) ^ 2 + ((data.fromPlanet as Planet).coordY + (data.toPlanet as Planet).coordY) ^ 2
-        )
 
         const carrierSurcharge = carrier.rating * 100 + (Math.random() - 0.5) * 50;
 
-        this.price = (distBetweenPlanets * 800) + carrierSurcharge;
+        this.price = (GetDistance(data) * 800) + carrierSurcharge;
         this.price = Math.round(this.price * 50) / 50;
         this.price = (Math.round(this.price)) - 0.01;
 
@@ -31,4 +28,6 @@ export class Trip {
         if (data.seatType == SeatType.Business) this.price *= 2;
         if (data.seatType == SeatType.First) this.price *= 5;
     }
+
+
 }

@@ -1,7 +1,7 @@
 ﻿'use client'
 
 import {useSearchParams} from "next/navigation";
-import {BookingFormData} from "@/app/booking/page";
+import {BookingFormData, GetDistance} from "@/app/booking/page";
 import {Carriers} from "@/app/data/carrier";
 import {Trip} from "@/app/data/trip";
 import {ShipModels} from "@/app/data/shipModel";
@@ -42,6 +42,7 @@ export default function Page() {
     return (<>
         <h1>Trips</h1>
         <p>{DataToString(data)}</p>
+        <p>Distance: {Math.round(GetDistance(data))} ly</p>
         <table>
             <tbody>
             {trips.map((trip: Trip, index: number) => {
@@ -50,7 +51,11 @@ export default function Page() {
                     <td>{trip.model.manufacturer} {trip.model.model}</td>
                     <td>Ȼ{trip.price.toLocaleString()} (CRED)</td>
                     <td>
-                        <button>Select</button>
+                        <button onClick={() => {
+                            const info = JSON.stringify(trip);
+                            document.location.href = "/checkout?tripInfo=" + info;
+                        }}>Select
+                        </button>
                     </td>
                 </tr>);
             })}
@@ -59,7 +64,7 @@ export default function Page() {
     </>);
 }
 
-function DataToString(bookingFormData: BookingFormData) {
+export function DataToString(bookingFormData: BookingFormData) {
     const outboundDate = DateToString(bookingFormData.fromDate);
     const returnDate = DateToString(bookingFormData.toDate);
     const infants = bookingFormData.infants > 0 ? (bookingFormData.infants + " infants + ") : "";

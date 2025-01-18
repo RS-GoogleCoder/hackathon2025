@@ -10,58 +10,77 @@ import "./trips.scss";
 import {Planet} from "@/app/data/planet";
 
 export default function Page() {
-
-
     const searchParams = useSearchParams();
     const searchParamsData = searchParams.get("data");
     let data: BookingFormData;
 
-
     const [trips, setTrips] = useState<Trip[]>([]);
+    const [sortOption, setSortOption] = useState<string>("rating");
 
     if (searchParamsData) {
         data = JSON.parse(searchParamsData);
         console.dir(data);
 
-        // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
             setTrips(GetRandomTrips(data, 20));
         }, []);
-    }
-    else {
-        return (<>
-            <h1>No trip data!</h1>
-            <button onClick={() => {
-                document.location.href = "/booking"
-            }}>Go to bookings
-            </button>
-        </>);
+    } else {
+        return (
+            <>
+                <h1>No trip data!</h1>
+                <button onClick={() => {
+                    document.location.href = "/booking"
+                }}>Go to bookings
+                </button>
+            </>
+        );
     }
 
+    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortOption(e.target.value);
+    };
 
-    return (<>
-        <h1>Trips</h1>
-        <p>{DataToString(data)}</p>
-        <p>Distance: {Math.round(GetDistance(data))} ly</p>
-        <table>
-            <tbody>
-            {trips.map((trip: Trip, index: number) => {
-                return (<tr key={index}>
-                    <td>{trip.carrier.name}</td>
-                    <td>{trip.model.manufacturer} {trip.model.model}</td>
-                    <td>Ȼ{trip.price.toLocaleString()} (CRED)</td>
-                    <td>
-                        <button onClick={() => {
-                            const info = JSON.stringify(trip);
-                            document.location.href = "/checkout?tripInfo=" + info;
-                        }}>Select
-                        </button>
-                    </td>
-                </tr>);
-            })}
-            </tbody>
-        </table>
-    </>);
+    const sortedTrips = [...trips].sort((a, b) => {
+        if (sortOption === "price") {
+            return a.price - b.price;
+        } else if (sortOption === "rating") {
+            return b.carrier.rating - a.carrier.rating;
+        }
+        return 0;
+    });
+
+    return (
+        <>
+            <h1>Trips</h1>
+            <p>{DataToString(data)}</p>
+            <p>Distance: {Math.round(GetDistance(data))} ly</p>
+            <label htmlFor="sort">Sort by: </label>
+            <select id="sort" value={sortOption} onChange={handleSortChange}>
+                <option value="price">Price</option>
+                <option value="rating">Carrier Rating</option>
+            </select>
+            <table>
+                <tbody>
+                {sortedTrips.map((trip: Trip, index: number) => {
+                    return (
+                        <tr key={index}>
+                            <td>{trip.carrier.name} ({trip.carrier.rating}⭐)</td>
+                            <td>{trip.model.manufacturer} {trip.model.model}</td>
+                            <td>Ȼ{trip.price.toLocaleString()} (CRED)</td>
+                            <td>
+                                <button onClick={() => {
+                                    const info = JSON.stringify(trip);
+                                    document.location.href = "/checkout?tripInfo=" + info;
+                                }}>Select
+                                </button>
+                            </td>
+                        </tr>
+                    );
+                })}
+                </tbody>
+            </table>
+        </>
+    );
 }
 
 export function DataToString(bookingFormData: BookingFormData) {

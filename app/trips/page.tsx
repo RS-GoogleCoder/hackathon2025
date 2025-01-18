@@ -5,9 +5,11 @@ import {BookingFormData, GetDistance, SeatType} from "@/app/booking/page";
 import {Carriers} from "@/app/data/carrier";
 import {Trip} from "@/app/data/trip";
 import {ShipModels} from "@/app/data/shipModel";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./trips.scss";
 import {Planet} from "@/app/data/planet";
+import Image from "next/image";
+import arrowForward from "@/public/arrow_forward.svg";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -21,6 +23,7 @@ export default function Page() {
         data = JSON.parse(searchParamsData);
         console.dir(data);
 
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
             setTrips(GetRandomTrips(data, 20));
         }, []);
@@ -64,14 +67,16 @@ export default function Page() {
                 {sortedTrips.map((trip: Trip, index: number) => {
                     return (
                         <tr key={index}>
-                            <td>{trip.carrier.name} ({trip.carrier.rating}⭐)</td>
+                            <td>{trip.carrier.name} ({trip.carrier.rating % 1 === 0 ? trip.carrier.rating + ".0" : trip.carrier.rating}⭐)</td>
                             <td>{trip.model.manufacturer} {trip.model.model}</td>
                             <td>Ȼ{trip.price.toLocaleString()} (CRED)</td>
-                            <td>
+                            <td style={{display: "flex", flexDirection: "row-reverse"}}>
                                 <button onClick={() => {
                                     const info = JSON.stringify(trip);
                                     document.location.href = "/checkout?tripInfo=" + info;
-                                }}>Select
+                                }} style={{display: "flex", alignItems: "center"}}>
+                                    Select
+                                    <Image src={arrowForward} alt={"Forward arrow"} style={{marginLeft: "0.5rem"}}/>
                                 </button>
                             </td>
                         </tr>
@@ -86,12 +91,12 @@ export default function Page() {
 export function DataToString(bookingFormData: BookingFormData) {
     const outboundDate = DateToString(bookingFormData.fromDate);
     const returnDate = DateToString(bookingFormData.toDate);
-    const infants = bookingFormData.infants > 0 ? (bookingFormData.infants + " infants + ") : "";
-    const children = bookingFormData.children > 0 ? bookingFormData.children + " children + " : "";
-
+    const infants = bookingFormData.infants > 1 ? (bookingFormData.infants + " infants + ") : (bookingFormData.infants === 1 ? "1 infant + " : "");
+    const children = bookingFormData.children > 1 ? (bookingFormData.children + " children + ") : (bookingFormData.children === 1 ? "1 child + " : "");
+    const adults = bookingFormData.adults > 1 ? (bookingFormData.adults + " adults") : (bookingFormData.adults === 1 ? "1 adult" : "");
 
     return outboundDate + " - " + returnDate + ", \t " + (bookingFormData.fromPlanet as Planet).name + " to " + (bookingFormData.toPlanet as Planet).name + ", \t " +
-        infants + children + bookingFormData.adults + " adults (" + SeatTypeToString(bookingFormData.seatType as SeatType) + ")";
+        infants + children + adults + " (" + SeatTypeToString(bookingFormData.seatType as SeatType) + ")";
 }
 
 function DateToString(date: Date) {

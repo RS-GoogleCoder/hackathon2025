@@ -1,7 +1,17 @@
-﻿import './header.scss';
+﻿'use client'
+
+import './header.scss';
 import Jawa from "@/public/jawa.png";
 import Image from "next/image";
+import {useEffect, useState} from 'react';
+
 export default function Header() {
+    const [currentPath, setCurrentPath] = useState('');
+
+    useEffect(() => {
+        setCurrentPath(window.location.pathname);
+    }, []);
+
     return (
         <header className={"header"}>
             <a style={{display: "flex", alignItems: "center"}} href={"/"}>
@@ -9,9 +19,10 @@ export default function Header() {
                 <Image src={Jawa} alt={"Jawa"} style={{height: "2rem", width: "auto", marginLeft: "0.5rem"}}/>
             </a>
             <nav className={"nav-links"}>
-                <a href={"/"}>Home</a>
-                <a href={"/booking"}>Booking</a>
-                <a href={"/map"}>Galaxy Map</a>
+                <a href={"/"} className={currentPath === "/" ? "active" : ""}>Home</a>
+                <a href={"/booking"} className={currentPath === "/booking" ? "active" : ""}>Booking</a>
+                <a href={"/map"} className={currentPath === "/map" ? "active" : ""}>Galaxy Map</a>
+
             </nav>
         </header>
     );

@@ -58,7 +58,7 @@ export default function Page() {
             <p>{DataToString(data)}</p>
             <p>Distance: {Math.round(GetDistance(data))} ly</p>
             <label htmlFor="sort">Sort by: </label>
-            <select id="sort" value={sortOption} onChange={handleSortChange}>
+            <select id="sort" value={sortOption} onChange={handleSortChange} style={{fontSize: "1rem"}}>
                 <option value="price">Price</option>
                 <option value="rating">Carrier Rating</option>
             </select>
@@ -73,7 +73,7 @@ export default function Page() {
                             </td>
                             <td>{trip.model.manufacturer} {trip.model.model}</td>
                             <td>Ȼ{trip.price.toLocaleString()} (CRED)</td>
-                            <td style={{display: "flex", flexDirection: "row-reverse"}}>
+                            <td style={{display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
                                 <button onClick={() => {
                                     const info = JSON.stringify(trip);
                                     document.location.href = "/checkout?tripInfo=" + info;

@@ -1,0 +1,32 @@
+﻿.carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+}
+
+.carousel-item {
+  flex: 0 0 33.33%; /* Show 3 items at once */
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  opacity: 1;
+  transform: translateX(0);
+
+  div img {
+    width: auto;
+    height: 10vh;
+  }
+}
+
+.carousel-controls {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.carousel-controls button {
+  padding: 5px 10px;
+  cursor: pointer;
+}

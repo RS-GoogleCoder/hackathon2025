@@ -1,32 +1,34 @@
-﻿.carousel {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  display: flex;
+﻿@use "@/app/globals";
+
+.small-image {
+  width: auto;
+  height: 40px !important;
 }
 
 .carousel-item {
-  flex: 0 0 33.33%; /* Show 3 items at once */
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-  opacity: 1;
-  transform: translateX(0);
+  @include globals.Glow();
+  border-radius: 1rem;
+  border-width: 2px;
+  background-color: transparent;
+  padding: 1rem;
+  width: 25vw;
+  margin: 2rem auto;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
 
-  div img {
-    width: auto;
-    height: 10vh;
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  img {
+    border-radius: 1rem;
+    margin: auto;
   }
 }
 
-.carousel-controls {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-}
-
-.carousel-controls button {
-  padding: 5px 10px;
-  cursor: pointer;
+.carousel-item:hover {
+  background-color: #f9f9f9;
+  color: #000;
 }

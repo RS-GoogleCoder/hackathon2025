@@ -3,9 +3,10 @@
 import {Attraction, Attractions} from "@/app/data/attraction";
 import {useEffect, useState} from "react";
 import Image from "next/image";
-import Carousel from "@/app/components/carousel/carousel";
+import CustomCarousel from "@/app/components/carousel/carousel";
 import "./attractions/attractions.scss";
 import {Carrier, Carriers} from "./data/carrier";
+import "../app/components/carousel/carousel.scss";
 
 export default function Page() {
     const [topRatedAttractions, setTopRatedAttractions] = useState<Attraction[]>([]);
@@ -21,9 +22,9 @@ export default function Page() {
 
     return <>
         <h1 style={{textAlign: "center"}}>Our top picks</h1>
-        <Carousel interval={3000} showControls={false} reverse={false}>
+        <CustomCarousel interval={3000} showControls={false}>
             {topRatedAttractions.map(a => (
-                <div key={a.name} className={"attraction"}>
+                <div key={a.name} className={"carousel-item"}>
                     <h2>{a.name}</h2>
                     <Image src={"/attractions/" + a.image} alt={a.name} width={200} height={200}
                            style={{width: "auto"}}/>
@@ -37,23 +38,22 @@ export default function Page() {
                     </p>
                 </div>
             ))}
-        </Carousel>
+        </CustomCarousel>
         <h1 style={{textAlign: "center"}}>Travel with:</h1>
-        <Carousel interval={3000} showControls={false} reverse={true}>
+        <CustomCarousel interval={3000} showControls={false}>
             {topRatedCarriers.map(a => (
-                <div key={a.name} className={"attraction"}>
-                    <h2>{a.name}</h2>
-                    <Image src={"/carriers/" + a.image} alt={a.name} width={200} height={200}
-                           style={{width: "auto"}}/>
+                <div key={a.name} className={"carousel-item"}>
+                    <h2><Image className="small-image" src={"/carriers/" + a.image} alt={a.name} width={200}
+                               height={200} style={{width: "auto"}}/>
+                        {a.name}</h2>
                     <p>Rating: {a.rating}⭐</p>
                 </div>
             ))}
-        </Carousel>
+        </CustomCarousel>
         <div style={{textAlign: "center", fontSize: "1.5em", marginTop: "4rem"}}>
             <a href={"/booking"} style={{textDecoration: "none"}}>Bookings</a> • <a href={"/attractions"}
                                                                                     style={{textDecoration: "none"}}>Attractions</a> • <a
-            href={"/map"} style={{textDecoration: "none"}}>Galaxy
-            Map</a>
+            href={"/map"} style={{textDecoration: "none"}}>Galaxy Map</a>
         </div>
     </>
 }

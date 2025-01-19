@@ -1,55 +1,46 @@
-﻿import React, {useState, useEffect} from 'react';
-import './carousel.scss';
+﻿import React from 'react';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 interface CarouselProps {
     children: React.ReactNode[];
     interval?: number;
     showControls: boolean;
-    reverse: boolean;
 }
 
-const Carousel: React.FC<CarouselProps> = ({children, interval = 3000, showControls = false, reverse = false}) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % children.length);
-        }, interval);
-
-        return () => clearInterval(timer);
-    }, [children.length, interval]);
-
-    const handlePrevious = () => {
-        if (!reverse) setCurrentIndex((currentIndex - 1 + children.length) % children.length);
-        else setCurrentIndex((currentIndex + 1) % children.length);
-    };
-
-    const handleNext = () => {
-        if (!reverse) setCurrentIndex((currentIndex + 1) % children.length);
-        else setCurrentIndex((currentIndex - 1 + children.length) % children.length);
-    };
-
-    const getVisibleItems = () => {
-        const items = [];
-        for (let i = 0; i < 3; i++) {
-            items.push(children[(currentIndex + i) % children.length]);
+const CustomCarousel: React.FC<CarouselProps> = ({children, interval = 3000, showControls = false}) => {
+    const responsive = {
+        superLargeDesktop: {
+            breakpoint: {max: 4000, min: 3000},
+            items: 5
+        },
+        desktop: {
+            breakpoint: {max: 3000, min: 1024},
+            items: 3
+        },
+        tablet: {
+            breakpoint: {max: 1024, min: 464},
+            items: 2
+        },
+        mobile: {
+            breakpoint: {max: 464, min: 0},
+            items: 1
         }
-        return items;
     };
 
     return (
-        <div className="carousel">
-            {getVisibleItems().map((child, index) => (
-                <div key={index} className="carousel-item active">
-                    {child}
-                </div>
-            ))}
-            {showControls && <div className="carousel-controls">
-                <button onClick={handlePrevious}>Previous</button>
-                <button onClick={handleNext}>Next</button>
-            </div>}
-        </div>
+        <Carousel
+            responsive={responsive}
+            autoPlay={true}
+            autoPlaySpeed={interval}
+            infinite={true}
+            showDots={showControls}
+            arrows={showControls}
+            pauseOnHover={false}
+        >
+            {children}
+        </Carousel>
     );
 };
 
-export default Carousel;
+export default CustomCarousel;
